@@ -1,0 +1,34 @@
+ <!DOCTYPE html>
+<html>
+<head>
+<title>Ayin DEX price tracker</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<script>
+
+async function getPrice() {
+  const response = await fetch("https://backend.mainnet.alephium.org/addresses/25ywM8iGxKpZWuGA5z6DXKGcZCXtPBmnbQyJEsjvjjWTy/tokens/1a281053ba8601a658368594da034c2e99a0fb951b86498d05e76aedfe666800/balance");
+  const ayin = await response.json();
+  console.log(ayin);
+
+  const response2 = await fetch("https://backend.mainnet.alephium.org/addresses/25ywM8iGxKpZWuGA5z6DXKGcZCXtPBmnbQyJEsjvjjWTy/balance")
+  const alph = await response2.json();
+  console.log(alph)
+  
+  const pricepair = document.getElementById("alphayin");
+  pricepair.innerHTML = "1 $AYIN = "+ (parseFloat(alph['balance'])/parseFloat(ayin['balance'])).toFixed(4)+ " ALPH"
+}
+
+
+</script>
+
+<h1>Prices of AYIN DEX pairs</h1>
+
+<h2>$ALPH - $AYIN</h2>
+<p id="alphayin">Loading...</p>
+
+<script>getPrice()</script>
+</body>
+
+</html> 
