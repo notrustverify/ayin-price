@@ -17,7 +17,7 @@ async function getPrice() {
   console.log(alph)
   
   const pricepair = document.getElementById("alphayin");
-  pricepair.innerHTML = "1 $AYIN = "+ (parseFloat(alph['balance'])/parseFloat(ayin['balance'])).toFixed(4)+ " ALPH"
+  pricepair.innerHTML = "1 $AYIN = "+ (parseFloat(alph['balance'])/parseFloat(ayin['balance'])).toFixed(6)+ " ALPH"
 }
 
 
