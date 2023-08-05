@@ -7,8 +7,13 @@
 </head>
 
 <body>
+
+   <style>
+   </style>
    <script>
+
       const ALPH_DECIMALS = 18;
+      const EXPLORER_BASEURL = "https://explorer.mainnet.alephium.org"
       const tokenList = [
          {
             tokenid:
@@ -65,16 +70,19 @@
                console.error(err);
                price = "error, cannot fetch price";
             }
+            const priceText = "1 " + value["symbol"] + " = " + price.toFixed(6) + " ALPH"
+            const explorerLink = EXPLORER_BASEURL + '/addresses/' + value['contractid'] 
+	    const div = document.createElement("div")
 
-            const heading = document.createElement("h4");
+            const heading = document.createElement("h4")
             heading.append("ALPH - " + value["symbol"]);
+		 
             const para = document.createElement("p");
-            const node = document.createTextNode(
-               "1 " + value["symbol"] + " = " + price.toFixed(6) + " ALPH"
-            );
-            para.appendChild(node);
-            tokenListElement.appendChild(heading);
-            tokenListElement.appendChild(para);
+            para.innerHTML =  "<a target='_blank' rel='noopener noreferrer' title="+explorerLink+" href="+explorerLink+">"+priceText+"</a>" 
+
+            div.appendChild(heading);
+            div.appendChild(para);
+            tokenListElement.appendChild(div);
 
             //count if all tokens had been retrieve, remove loading p
             if (counterLoaded == tokenList.length - 1)
