@@ -75,10 +75,10 @@
 	    const div = document.createElement("div")
 
             const heading = document.createElement("h4")
-            heading.append("ALPH - " + value["symbol"]);
+            heading.innerHTML="<a target='_blank' rel='noopener noreferrer' title="+explorerLink+" href="+explorerLink+">"+"ALPH - " + value["symbol"]  +"</a>"
 		 
             const para = document.createElement("p");
-            para.innerHTML =  "<a target='_blank' rel='noopener noreferrer' title="+explorerLink+" href="+explorerLink+">"+priceText+"</a>" 
+            para.innerHTML = priceText 
 
             div.appendChild(heading);
             div.appendChild(para);
