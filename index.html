@@ -23,6 +23,8 @@
 
       const ALPH_DECIMALS = 18;
       const EXPLORER_BASEURL = "https://explorer.mainnet.alephium.org"
+      //const BACKEND_BASEURL = "https://backend.mainnet.alephium.org"
+      const BACKEND_BASEURL = "https://alephium-backend.ono.re"
       const tokenList = [
          {
             tokenid:
@@ -33,18 +35,19 @@
          },
          {
             tokenid:
+               "66da610efb5129c062e88e5fd65fe810f31efd1597021b2edf887a4360fa0800",
+            contractid: "22PUN5TpytzGRXZnzkHViRaWioiGNzdufJH1CxFyQF5Sf",
+            symbol: "ALF",
+            supply: 161_803,
+            decimals: 9,
+         },
+         {
+            tokenid:
                "b522184377a33e376e997a950288fa76c1f48e97bc29cd10779adc7cfb673200",
             contractid: "w5ZU1rV34YJryDCXCXJBXA77Wbx5L4DCmunDG3Pn5GWb",
             symbol: "BERRY",
             decimals: 0,
-         },
-         {
-            tokenid:
-               "66da610efb5129c062e88e5fd65fe810f31efd1597021b2edf887a4360fa0800",
-            contractid: "22PUN5TpytzGRXZnzkHViRaWioiGNzdufJH1CxFyQF5Sf",
-            symbol: "ALF",
-            supply: 161803,
-            decimals: 9,
+            supply: 10_000
          },
          {
             tokenid:
@@ -52,6 +55,8 @@
             contractid: "27wpryy3RtEYLnkuF2xgPKQfcYAxWY4mFxaM8XHpXndfD",
             symbol: "PACA",
             decimals: 0,
+            //supply: 100_000_000,
+            //circulating_supply_address: "1dSyUmEbDXp6RWvpK25t9VqM3RUa4PGQa24di37boPJP"
          },
          {
             tokenid:
@@ -59,6 +64,8 @@
             contractid: "tx1Uck1idLzfyjAbyqrFkNWrxz1MfKCV5FELnJdtbVUs",
             symbol: "TAIL",
             decimals: 0,
+            //supply: 69_000_000,
+            //circulating_supply_address: "19TUu8oE8dfDzH3RuJhACdBFh3Wndez7xZ8Fqjb13GiKd"
          },
       ];
 
@@ -73,10 +80,10 @@
          const alphUsd = await getAlphUsd()
          var counterLoaded = 0
 
-         Object.entries(tokenList).forEach(async (entry) => {
-            const [key, value] = entry
+         for (const value of tokenList) {
             var price = ""
             var priceText = ""
+            var pricePerAlph = 0
             try {
                price = await getPrice(
                   value["contractid"],
@@ -98,14 +105,6 @@
             const div = document.createElement("div")
 
             heading.innerHTML = "<a target='_blank' rel='noopener noreferrer' title=" + explorerLink + " href=" + explorerLink + ">" + "ALPH - " + value["symbol"] + "</a>"
-		 console.log(value["supply"])
-
-
-
-
-
-
-
 
 
             const para = document.createElement("p")
@@ -114,27 +113,31 @@
             div.appendChild(heading);
             div.appendChild(para);
 
-	    if(value["supply"] !== undefined){
+            if (value["supply"] !== undefined) {
+               supply = value['supply']
+               if (value["circulating_supply_address"] !== undefined)
+                  supply = await getCirculatingSupply(value["supply"], value["circulating_supply_address"], value["tokenid"], value["decimals"])
+               console.log(value['symbol'], supply, pricePerAlph, alphUsd, value["circulating_supply_address"])
                const paraMc = document.createElement("p")
                const paraSupply = document.createElement("p")
                div.appendChild(paraMc)
                div.appendChild(paraSupply)
-               paraSupply.innerHTML = "Supply: "+ formatNumber(value['supply'])
-               paraMc.innerHTML = "Market cap: $"+ formatNumber((value['supply']*pricePerAlph*alphUsd).toFixed(4))
-	    }
+               paraSupply.innerHTML = "Circulating supply: " + formatNumber(supply)
+               paraMc.innerHTML = "Market cap: $" + formatNumber((supply * pricePerAlph * alphUsd).toFixed(4))
+            }
 
 
             tokenListElement.appendChild(div);
 
-         });
+         }
 
 
       }
 
-function formatNumber(number) {
-  const formatter = Intl.NumberFormat("en", { notation: "standard" });
-  return formatter.format(number);
-}                                                                                                 	
+      function formatNumber(number) {
+         const formatter = Intl.NumberFormat("en", { notation: "standard" });
+         return formatter.format(number);
+      }
       async function updatePrices() {
 
          Object.entries(tokenList).forEach(async (entry) => {
@@ -160,7 +163,6 @@ function formatNumber(number) {
 
             priceP.innerHTML = priceText
 
-            console.log("update")
          })
       }
 
@@ -178,14 +180,14 @@ function formatNumber(number) {
       async function getPrice(contractid, tokenid, decimals) {
          const price = await Promise.all([
             await fetch(
-               "https://backend.mainnet.alephium.org/addresses/" +
+               BACKEND_BASEURL + "/addresses/" +
                contractid +
                "/tokens/" +
                tokenid +
                "/balance"
             ).then((resp) => resp.json()),
             await fetch(
-               "https://backend.mainnet.alephium.org/addresses/" +
+               BACKEND_BASEURL + "/addresses/" +
                contractid +
                "/balance"
             ).then((resp) => resp.json()),
@@ -215,9 +217,28 @@ function formatNumber(number) {
          return priceUsd
       }
 
+      async function getCirculatingSupply(supply, address, tokenid, decimals) {
+         const leftSupply =
+            await fetch(
+               BACKEND_BASEURL + "/addresses/" +
+               address +
+               "/tokens/" +
+               tokenid +
+               "/balance"
+            ).then((resp) => resp.json()).then(data => { return data['balance'] }).catch(error => {
+               console.error(error)
+               return 0
+            }
+
+            )
+
+         return supply - (leftSupply / Math.pow(10, decimals))
+      }
+
    </script>
 
-   <input  type="checkbox" id="autoUpdate" onchange="updateSelection(this)"> Auto update
+
+   <input type="checkbox" id="autoUpdate" onchange="updateSelection(this)"> Auto update
    <div style="text-align: center;padding-left: 1em;">
       <h1>Prices of AYIN DEX pairs</h1>
       <p id="loading">Loading...</p>
