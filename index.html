@@ -43,6 +43,7 @@
                "66da610efb5129c062e88e5fd65fe810f31efd1597021b2edf887a4360fa0800",
             contractid: "22PUN5TpytzGRXZnzkHViRaWioiGNzdufJH1CxFyQF5Sf",
             symbol: "ALF",
+            supply: 161803,
             decimals: 9,
          },
          {
@@ -97,13 +98,32 @@
             const div = document.createElement("div")
 
             heading.innerHTML = "<a target='_blank' rel='noopener noreferrer' title=" + explorerLink + " href=" + explorerLink + ">" + "ALPH - " + value["symbol"] + "</a>"
+		 console.log(value["supply"])
 
-            const para = document.createElement("p");
+
+
+
+
+
+
+
+
+            const para = document.createElement("p")
             para.id = value["symbol"]
             para.innerHTML = priceText
-
             div.appendChild(heading);
             div.appendChild(para);
+
+	    if(value["supply"] !== undefined){
+               const paraMc = document.createElement("p")
+               const paraSupply = document.createElement("p")
+               div.appendChild(paraMc)
+               div.appendChild(paraSupply)
+               paraSupply.innerHTML = "Supply: "+ formatNumber(value['supply'])
+               paraMc.innerHTML = "Market cap: $"+ formatNumber((value['supply']*pricePerAlph*alphUsd).toFixed(4))
+	    }
+
+
             tokenListElement.appendChild(div);
 
          });
@@ -111,6 +131,10 @@
 
       }
 
+function formatNumber(number) {
+  const formatter = Intl.NumberFormat("en", { notation: "standard" });
+  return formatter.format(number);
+}                                                                                                 	
       async function updatePrices() {
 
          Object.entries(tokenList).forEach(async (entry) => {
@@ -175,7 +199,7 @@
             return new Promise((resolve, reject) => {
                resolve([alphBalance, tokenBalance]);
             });
-         }).catch(err => { console.log("dfsfdjs" + err) })
+         }).catch(err => { console.error(err) })
 
          return price;
       }
