@@ -65,26 +65,33 @@
 
          textPrice()
 
+               document.getElementById("loading").innerHTML = "";
       });
 
-      function textPrice() {
+      async function textPrice() {
          const tokenListElement = document.getElementById("tokenlist")
+	 const alphUsd = await getAlphUsd()
          var counterLoaded = 0
-         Object.entries(tokenList).forEach(async (entry) => {
-            const [key, value] = entry;
-            var price = "";
 
+         Object.entries(tokenList).forEach(async (entry) => {
+            const [key, value] = entry
+            var price = ""
+            var priceText = ""
             try {
                price = await getPrice(
                   value["contractid"],
                   value["tokenid"],
                   value["decimals"]
                );
+	       alphBalance = price[0]
+	       tokenBalance = price[1]
+	       pricePerAlph = alphBalance/tokenBalance
+            priceText = "1 " + value["symbol"] + " = " + (pricePerAlph).toFixed(6) + " ALPH ($"+(pricePerAlph * alphUsd).toFixed(4)+")"
             } catch (err) {
                console.error(err);
                price = "error, cannot fetch price";
             }
-            const priceText = "1 " + value["symbol"] + " = " + price.toFixed(6) + " ALPH"
+	    
             const explorerLink = EXPLORER_BASEURL + '/addresses/' + value['contractid']
 
             const heading = document.createElement("h4")
@@ -99,10 +106,6 @@
             div.appendChild(para);
             tokenListElement.appendChild(div);
 
-            //count if all tokens had been retrieve, remove loading p
-            if (counterLoaded == tokenList.length - 1)
-               document.getElementById("loading").innerHTML = "";
-            counterLoaded++
          });
 
 
@@ -142,13 +145,26 @@
                Math.pow(10, ALPH_DECIMALS);
 
             return new Promise((resolve, reject) => {
-               resolve(alphBalance / tokenBalance);
+               resolve([alphBalance, tokenBalance]);
             });
          });
 
          return price;
       }
+     
+     async function getAlphUsd(){
 
+         const priceUsd = await Promise.all([
+            await fetch(
+            "https://api.coingecko.com/api/v3/simple/price?ids=alephium&vs_currencies=usd").then((resp) => resp.json()),
+         ]).then((allResponses) => {
+            return new Promise((resolve, reject) => {
+               resolve(allResponses[0]['alephium']['usd']);
+            });
+         });
+
+         return priceUsd;
+     }
 
    </script>
 
