@@ -16,7 +16,7 @@
          left: 50%;
          margin-right: -50%;
          transform: translate(-50%, -50%);
-         font-family: Consolas;
+         font-family: Open Sans;
       }
    </style>
    <script>
@@ -61,16 +61,15 @@
          },
       ];
 
-      document.addEventListener("DOMContentLoaded", function (event) {
-
-         textPrice()
-
-               document.getElementById("loading").innerHTML = "";
+      document.addEventListener("DOMContentLoaded", async function (event) {
+         document.getElementById("autoUpdate").checked = false
+         await textPrice()
+         document.getElementById("loading").remove()
       });
 
       async function textPrice() {
          const tokenListElement = document.getElementById("tokenlist")
-	 const alphUsd = await getAlphUsd()
+         const alphUsd = await getAlphUsd()
          var counterLoaded = 0
 
          Object.entries(tokenList).forEach(async (entry) => {
@@ -83,15 +82,15 @@
                   value["tokenid"],
                   value["decimals"]
                );
-	       alphBalance = price[0]
-	       tokenBalance = price[1]
-	       pricePerAlph = alphBalance/tokenBalance
-            priceText = "1 " + value["symbol"] + " = " + (pricePerAlph).toFixed(6) + " ALPH ($"+(pricePerAlph * alphUsd).toFixed(4)+")"
+               alphBalance = price[0]
+               tokenBalance = price[1]
+               pricePerAlph = alphBalance / tokenBalance
+               priceText = "1 " + value["symbol"] + " = " + (pricePerAlph).toFixed(6) + " ALPH ($" + (pricePerAlph * alphUsd).toFixed(4) + ")"
             } catch (err) {
                console.error(err);
                price = "error, cannot fetch price";
             }
-	    
+
             const explorerLink = EXPLORER_BASEURL + '/addresses/' + value['contractid']
 
             const heading = document.createElement("h4")
@@ -100,6 +99,7 @@
             heading.innerHTML = "<a target='_blank' rel='noopener noreferrer' title=" + explorerLink + " href=" + explorerLink + ">" + "ALPH - " + value["symbol"] + "</a>"
 
             const para = document.createElement("p");
+            para.id = value["symbol"]
             para.innerHTML = priceText
 
             div.appendChild(heading);
@@ -111,11 +111,39 @@
 
       }
 
+      async function updatePrices() {
+
+         Object.entries(tokenList).forEach(async (entry) => {
+            const [key, value] = entry
+            var priceText = ""
+            const priceP = document.getElementById(value["symbol"])
+
+            const alphUsd = await getAlphUsd()
+            try {
+               price = await getPrice(
+                  value["contractid"],
+                  value["tokenid"],
+                  value["decimals"]
+               );
+               alphBalance = price[0]
+               tokenBalance = price[1]
+               pricePerAlph = alphBalance / tokenBalance
+               priceText = "1 " + value["symbol"] + " = " + (pricePerAlph).toFixed(6) + " ALPH ($" + (pricePerAlph * alphUsd).toFixed(4) + ")"
+            } catch (err) {
+               console.error(err);
+               price = "error, cannot fetch price";
+            }
+
+            priceP.innerHTML = priceText
+
+            console.log("update")
+         })
+      }
+
       function updateSelection(autoUpdateCheckBox) {
          if (autoUpdateCheckBox.checked) {
-            textPrice()
-            console.log("update")
-            intervalUpdate = setInterval(textPrice, 3000);
+            updatePrices()
+            intervalUpdate = setInterval(updatePrices, 30000);
          }
          else {
             if (typeof intervalUpdate !== 'undefined')
@@ -147,32 +175,29 @@
             return new Promise((resolve, reject) => {
                resolve([alphBalance, tokenBalance]);
             });
-         });
+         }).catch(err => { console.log("dfsfdjs" + err) })
 
          return price;
       }
-     
-     async function getAlphUsd(){
 
-         const priceUsd = await Promise.all([
+      async function getAlphUsd() {
+
+         const priceUsd =
             await fetch(
-            "https://api.coingecko.com/api/v3/simple/price?ids=alephium&vs_currencies=usd").then((resp) => resp.json()),
-         ]).then((allResponses) => {
-            return new Promise((resolve, reject) => {
-               resolve(allResponses[0]['alephium']['usd']);
-            });
-         });
-
-         return priceUsd;
-     }
+               "https://api.coingecko.com/api/v3/simple/price?ids=alephium&vs_currencies=usd").then((resp) => resp.json()).then(data => { return data['alephium']['usd'] }).catch(error => {
+                  console.error(error)
+                  return 0
+               })
+         return priceUsd
+      }
 
    </script>
 
-   <!--<input type="checkbox" id="autoUpdate" onchange="updateSelection(this)" > Auto update -->
+   <input  type="checkbox" id="autoUpdate" onchange="updateSelection(this)"> Auto update
    <div style="text-align: center;padding-left: 1em;">
-   <h1>Prices of AYIN DEX pairs</h1>
-   <p id="loading">Loading...</p>
-   <div id="tokenlist"></div>
+      <h1>Prices of AYIN DEX pairs</h1>
+      <p id="loading">Loading...</p>
+      <div id="tokenlist"></div>
    </div>
 </body>
 
