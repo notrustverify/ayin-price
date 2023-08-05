@@ -1,34 +1,122 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
+
 <head>
-<title>Ayin DEX price tracker</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Ayin DEX price tracker</title>
+   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
+
 <body>
-<script>
+   <script>
+      const ALPH_DECIMALS = 18;
+      const tokenList = [
+         {
+            tokenid:
+               "1a281053ba8601a658368594da034c2e99a0fb951b86498d05e76aedfe666800",
+            contractid: "25ywM8iGxKpZWuGA5z6DXKGcZCXtPBmnbQyJEsjvjjWTy",
+            symbol: "AYIN",
+            decimals: 18,
+         },
+         {
+            tokenid:
+               "b522184377a33e376e997a950288fa76c1f48e97bc29cd10779adc7cfb673200",
+            contractid: "w5ZU1rV34YJryDCXCXJBXA77Wbx5L4DCmunDG3Pn5GWb",
+            symbol: "BERRY",
+            decimals: 0,
+         },
+         {
+            tokenid:
+               "c0c0af7a481e3e50c50e418bf8ff6923dc4d878ac3744474e8c708a8adccfb00",
+            contractid: "28uUwyS2f1kSJnjT99r9e8XgMfojrPBSSrnqz7K5NrVPV",
+            symbol: "ALF",
+            decimals: 0,
+         },
+         {
+            tokenid:
+               "b2d71c116408ae47b931482a440f675dc9ea64453db24ee931dacd578cae9002",
+            contractid: "27wpryy3RtEYLnkuF2xgPKQfcYAxWY4mFxaM8XHpXndfD",
+            symbol: "PACA",
+            decimals: 0,
+         },
+         {
+            tokenid:
+               "1516c410b54470d667e1315ce2faa81870c76c5c7a491e3e86eeec8366495502",
+            contractid: "tx1Uck1idLzfyjAbyqrFkNWrxz1MfKCV5FELnJdtbVUs",
+            symbol: "TAIL",
+            decimals: 0,
+         },
+      ];
 
-async function getPrice() {
-  const response = await fetch("https://backend.mainnet.alephium.org/addresses/25ywM8iGxKpZWuGA5z6DXKGcZCXtPBmnbQyJEsjvjjWTy/tokens/1a281053ba8601a658368594da034c2e99a0fb951b86498d05e76aedfe666800/balance");
-  const ayin = await response.json();
-  console.log(ayin);
+      document.addEventListener("DOMContentLoaded", function (event) {
+         const tokenListElement = document.getElementById("tokenlist")
 
-  const response2 = await fetch("https://backend.mainnet.alephium.org/addresses/25ywM8iGxKpZWuGA5z6DXKGcZCXtPBmnbQyJEsjvjjWTy/balance")
-  const alph = await response2.json();
-  console.log(alph)
-  
-  const pricepair = document.getElementById("alphayin");
-  pricepair.innerHTML = "1 $AYIN = "+ (parseFloat(alph['balance'])/parseFloat(ayin['balance'])).toFixed(6)+ " ALPH"
-}
+         var counterLoaded = 0
+         Object.entries(tokenList).forEach(async (entry) => {
+            const [key, value] = entry;
+            var price = "";
 
+            try {
+               price = await getPrice(
+                  value["contractid"],
+                  value["tokenid"],
+                  value["decimals"]
+               );
+            } catch (err) {
+               console.error(err);
+               price = "error, cannot fetch price";
+            }
 
-</script>
+            const heading = document.createElement("h4");
+            heading.append("ALPH - " + value["symbol"]);
+            const para = document.createElement("p");
+            const node = document.createTextNode(
+               "1 " + value["symbol"] + " = " + price.toFixed(6) + " ALPH"
+            );
+            para.appendChild(node);
+            tokenListElement.appendChild(heading);
+            tokenListElement.appendChild(para);
 
-<h1>Prices of AYIN DEX pairs</h1>
+            //count if all tokens had been retrieve, remove loading p
+            if (counterLoaded == tokenList.length - 1)
+               document.getElementById("loading").innerHTML = "";
+            counterLoaded++
+         });
+      });
 
-<h2>$ALPH - $AYIN</h2>
-<p id="alphayin">Loading...</p>
+      async function getPrice(contractid, tokenid, decimals) {
+         const price = await Promise.all([
+            await fetch(
+               "https://backend.mainnet.alephium.org/addresses/" +
+               contractid +
+               "/tokens/" +
+               tokenid +
+               "/balance"
+            ).then((resp) => resp.json()),
+            await fetch(
+               "https://backend.mainnet.alephium.org/addresses/" +
+               contractid +
+               "/balance"
+            ).then((resp) => resp.json()),
+         ]).then((allResponses) => {
+            tokenBalance =
+               parseFloat(allResponses[0]["balance"]) / Math.pow(10, decimals);
+            alphBalance =
+               parseFloat(allResponses[1]["balance"]) /
+               Math.pow(10, ALPH_DECIMALS);
 
-<script>getPrice()</script>
+            return new Promise((resolve, reject) => {
+               resolve(alphBalance / tokenBalance);
+            });
+         });
+
+         return price;
+      }
+   </script>
+
+   <h1>Prices of AYIN DEX pairs</h1>
+
+   <p id="loading">Loading...</p>
+   <div id="tokenlist"></div>
 </body>
 
-</html> 
+</html>
