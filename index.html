@@ -9,6 +9,15 @@
 <body>
 
    <style>
+      body {
+         margin: 0;
+         position: absolute;
+         top: 50%;
+         left: 50%;
+         margin-right: -50%;
+         transform: translate(-50%, -50%);
+         font-family: Consolas;
+      }
    </style>
    <script>
 
@@ -53,8 +62,13 @@
       ];
 
       document.addEventListener("DOMContentLoaded", function (event) {
-         const tokenListElement = document.getElementById("tokenlist")
 
+         textPrice()
+
+      });
+
+      function textPrice() {
+         const tokenListElement = document.getElementById("tokenlist")
          var counterLoaded = 0
          Object.entries(tokenList).forEach(async (entry) => {
             const [key, value] = entry;
@@ -71,14 +85,15 @@
                price = "error, cannot fetch price";
             }
             const priceText = "1 " + value["symbol"] + " = " + price.toFixed(6) + " ALPH"
-            const explorerLink = EXPLORER_BASEURL + '/addresses/' + value['contractid'] 
-	    const div = document.createElement("div")
+            const explorerLink = EXPLORER_BASEURL + '/addresses/' + value['contractid']
 
             const heading = document.createElement("h4")
-            heading.innerHTML="<a target='_blank' rel='noopener noreferrer' title="+explorerLink+" href="+explorerLink+">"+"ALPH - " + value["symbol"]  +"</a>"
-		 
+            const div = document.createElement("div")
+
+            heading.innerHTML = "<a target='_blank' rel='noopener noreferrer' title=" + explorerLink + " href=" + explorerLink + ">" + "ALPH - " + value["symbol"] + "</a>"
+
             const para = document.createElement("p");
-            para.innerHTML = priceText 
+            para.innerHTML = priceText
 
             div.appendChild(heading);
             div.appendChild(para);
@@ -89,7 +104,21 @@
                document.getElementById("loading").innerHTML = "";
             counterLoaded++
          });
-      });
+
+
+      }
+
+      function updateSelection(autoUpdateCheckBox) {
+         if (autoUpdateCheckBox.checked) {
+            textPrice()
+            console.log("update")
+            intervalUpdate = setInterval(textPrice, 3000);
+         }
+         else {
+            if (typeof intervalUpdate !== 'undefined')
+               clearInterval(intervalUpdate);
+         }
+      };
 
       async function getPrice(contractid, tokenid, decimals) {
          const price = await Promise.all([
@@ -120,13 +149,15 @@
          return price;
       }
 
-     
+
    </script>
 
+   <!--<input type="checkbox" id="autoUpdate" onchange="updateSelection(this)" > Auto update -->
+   <div style="text-align: center;padding-left: 1em;">
    <h1>Prices of AYIN DEX pairs</h1>
-
    <p id="loading">Loading...</p>
    <div id="tokenlist"></div>
+   </div>
 </body>
 
 </html>
