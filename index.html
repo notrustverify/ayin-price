@@ -18,6 +18,20 @@
          transform: translate(-50%, -50%);
          font-family: Open Sans;
       }
+
+      p {
+         margin: 0.2em;
+      }
+
+      h4 {
+         margin: 0.6em;
+      }
+
+      button.link {
+         background: none;
+         border: none;
+      }
+
    </style>
    <script>
 
@@ -70,14 +84,26 @@
       ];
 
       document.addEventListener("DOMContentLoaded", async function (event) {
+         const alphUsd = await getAlphUsd()
          document.getElementById("autoUpdate").checked = false
-         await textPrice()
+
+
+         alphPriceText(alphUsd)
+         await textPrice(alphUsd)
+
          document.getElementById("loading").remove()
+
+
       });
 
-      async function textPrice() {
+
+      function alphPriceText(alphUsd){
+         document.getElementById("alphPrice").innerHTML = "<i>ALPH Price $" + alphUsd+"</i>"
+      }
+
+      async function textPrice(alphUsd) {
          const tokenListElement = document.getElementById("tokenlist")
-         const alphUsd = await getAlphUsd()
+
          var counterLoaded = 0
 
          for (const value of tokenList) {
@@ -115,15 +141,35 @@
 
             if (value["supply"] !== undefined) {
                supply = value['supply']
-               if (value["circulating_supply_address"] !== undefined)
+               var maxSupply = 0
+
+               if (value["circulating_supply_address"] !== undefined){
                   supply = await getCirculatingSupply(value["supply"], value["circulating_supply_address"], value["tokenid"], value["decimals"])
-               console.log(value['symbol'], supply, pricePerAlph, alphUsd, value["circulating_supply_address"])
+                  maxSupply = value["supply"]
+               }
+
+
+
                const paraMc = document.createElement("p")
                const paraSupply = document.createElement("p")
                div.appendChild(paraMc)
                div.appendChild(paraSupply)
                paraSupply.innerHTML = "Circulating supply: " + formatNumber(supply)
+
+
+               if (maxSupply > 0) {
+                  const paraMaxSupply = document.createElement("p")
+                  div.appendChild(paraMaxSupply)
+                  paraMaxSupply.innerHTML = "Max supply: "+formatNumber(maxSupply)
+               }else{
+                  const paraMaxSupply = document.createElement("p")
+                  div.appendChild(paraMaxSupply)
+                  paraMaxSupply.innerHTML = "Max supply: "+formatNumber(value['supply'])
+               }
+
                paraMc.innerHTML = "Market cap: $" + formatNumber((supply * pricePerAlph * alphUsd).toFixed(4))
+
+
             }
 
 
@@ -146,6 +192,7 @@
             const priceP = document.getElementById(value["symbol"])
 
             const alphUsd = await getAlphUsd()
+            alphPriceText(alphUsd)
             try {
                price = await getPrice(
                   value["contractid"],
@@ -238,7 +285,10 @@
    </script>
 
 
-   <input type="checkbox" id="autoUpdate" onchange="updateSelection(this)"> Auto update
+   <input type="checkbox" id="autoUpdate" onchange="updateSelection(this)">Auto update
+
+   <p style="padding-left: 1em;margin-bottom: -1em;margin-top: 1.5em;" id="alphPrice"></p>
+
    <div style="text-align: center;padding-left: 1em;">
       <h1>Prices of AYIN DEX pairs</h1>
       <p id="loading">Loading...</p>
