@@ -46,6 +46,7 @@
             contractid: "25ywM8iGxKpZWuGA5z6DXKGcZCXtPBmnbQyJEsjvjjWTy",
             symbol: "AYIN",
             decimals: 18,
+			url_dashboard: "https://status.notrustverify.ch/d-solo/e2aa92a7-e89d-425f-98a0-c730bf3be1dd/ayin?orgId=1&refresh=5m&theme=light&panelId=1"
          },
          {
             tokenid:
@@ -54,6 +55,7 @@
             symbol: "ALF",
             supply: 161_803,
             decimals: 9,
+			url_dashboard: "https://status.notrustverify.ch/d-solo/e2aa92a7-e89d-425f-98a0-c730bf3be1dd/ayin?orgId=1&refresh=5m&theme=light&panelId=9"
          },
          {
             tokenid:
@@ -61,7 +63,8 @@
             contractid: "w5ZU1rV34YJryDCXCXJBXA77Wbx5L4DCmunDG3Pn5GWb",
             symbol: "BERRY",
             decimals: 0,
-            supply: 10_000
+            supply: 10_000,
+			url_dashboard: "https://status.notrustverify.ch/d-solo/e2aa92a7-e89d-425f-98a0-c730bf3be1dd/ayin?orgId=1&refresh=5m&theme=light&panelId=13"
          },
          {
             tokenid:
@@ -70,7 +73,8 @@
             symbol: "VLAD",
             decimals: 9,
             circulating_supply_address: "1GDegYLQDXFwDBwMnjTzZXGXW4vYoxxwPKEHNAf8smquV",
-            supply: 999999
+            supply: 999999,
+			url_dashboard: "https://status.notrustverify.ch/d-solo/e2aa92a7-e89d-425f-98a0-c730bf3be1dd/ayin?orgId=1&refresh=5m&theme=light&panelId=10"
          },
          
          {
@@ -79,6 +83,7 @@
             contractid: "27wpryy3RtEYLnkuF2xgPKQfcYAxWY4mFxaM8XHpXndfD",
             symbol: "PACA",
             decimals: 0,
+			url_dashboard: "https://status.notrustverify.ch/d-solo/e2aa92a7-e89d-425f-98a0-c730bf3be1dd/ayin?orgId=1&refresh=5m&theme=light&panelId=11"
             //supply: 100_000_000,
             //circulating_supply_address: "1dSyUmEbDXp6RWvpK25t9VqM3RUa4PGQa24di37boPJP"
          },
@@ -88,6 +93,7 @@
             contractid: "tx1Uck1idLzfyjAbyqrFkNWrxz1MfKCV5FELnJdtbVUs",
             symbol: "TAIL",
             decimals: 0,
+			url_dashboard: "https://status.notrustverify.ch/d-solo/e2aa92a7-e89d-425f-98a0-c730bf3be1dd/ayin?orgId=1&refresh=5m&theme=light&panelId=12"
             //supply: 69_000_000,
             //circulating_supply_address: "19TUu8oE8dfDzH3RuJhACdBFh3Wndez7xZ8Fqjb13GiKd"
          },
@@ -181,8 +187,22 @@
 
 
             }
+			
+			if (value["url_dashboard"] !== undefined){
+			const details = document.createElement("details")
+			const summary = document.createElement("summary")
 
+			const iframe = document.createElement("iframe")
+			iframe.src = value["url_dashboard"]
 
+			//iframe.style.border = "none"
+			iframe.style = "width: 450; height: 200; border: none;"
+
+			summary.innerText = "Historical data"
+			details.append(iframe)
+			details.append(summary)
+			div.append(details)
+			}
             tokenListElement.appendChild(div);
 
          }
@@ -300,10 +320,15 @@
    <p style="padding-left: 1em;margin-bottom: -1em;margin-top: 1.5em;" id="alphPrice"></p>
 
    <div style="text-align: center;padding-left: 1em;">
+	
       <h1>Prices of <a href="https://ayin.app">AYIN DEX</a> pairs</h1>
+	  <h4><a href="https://status.notrustverify.ch/d/e2aa92a7-e89d-425f-98a0-c730bf3be1dd/ayin?orgId=1">More detailled stats</a></h4>
       <p id="loading">Loading...</p>
       <div id="tokenlist"></div>
+	  
+	  
    </div>
+   
 </body>
 
 </html>
