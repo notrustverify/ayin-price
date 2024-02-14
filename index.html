@@ -7,8 +7,19 @@
 </head>
 
 <body>
-
+    <div id="dark-mode-toggle" style="position: fixed; top: -.75em; right: 0; padding: 10px;">
+        <label>
+            <input type="checkbox" id="darkModeCheckbox"> Dark Mode
+        </label>
+    </div>
    <style>
+       body.dark-mode {
+        background-color: #121212;
+        color: #e0e0e0;
+    }
+    .dark-mode h4, .dark-mode p, .dark-mode a {
+        color: #e0e0e0;
+    }
       body {
          margin: 0;
          position: absolute;
@@ -137,130 +148,121 @@
       }
 
       async function textPrice(alphUsd) {
-         const tokenListElement = document.getElementById("tokenlist")
+    const tokenListElement = document.getElementById("tokenlist");
 
-         var counterLoaded = 0
+    // Prepare to fetch all prices in parallel
+    const pricePromises = tokenList.map(async (value) => {
+        try {
+            const price = await getPrice(value["contractid"], value["tokenid"], value["decimals"]);
+            const alphBalance = price[0];
+            const tokenBalance = price[1];
+            const pricePerAlph = alphBalance / tokenBalance;
+            let supply = value['supply'] || 0;
+            let maxSupply = 0;
 
-         for (const value of tokenList) {
-            var price = ""
-            var priceText = ""
-            var pricePerAlph = 0
-            try {
-               price = await getPrice(
-                  value["contractid"],
-                  value["tokenid"],
-                  value["decimals"]
-               );
-               alphBalance = price[0]
-               tokenBalance = price[1]
-               pricePerAlph = alphBalance / tokenBalance
-               priceText = "1 " + value["symbol"] + " = " + (pricePerAlph).toFixed(6) + " ALPH ($" + (pricePerAlph * alphUsd).toFixed(4) + ")"
-            } catch (err) {
-               console.error(err);
-               price = "error, cannot fetch price";
+            // Calculate circulating supply if address is provided
+            if (value["circulating_supply_address"] !== undefined) {
+                supply = await getCirculatingSupply(value["supply"], value["circulating_supply_address"], value["tokenid"], value["decimals"]);
+                maxSupply = value["supply"];
             }
 
-            const explorerLink = EXPLORER_BASEURL + '/addresses/' + value['contractid']
+            return {
+                ...value,
+                priceText: `1 ${value["symbol"]} = ${pricePerAlph.toFixed(6)} ALPH ($${(pricePerAlph * alphUsd).toFixed(4)})`,
+                pricePerAlph,
+                supply,
+                maxSupply
+            };
+        } catch (err) {
+            console.error(err);
+            return { ...value, priceText: "error, cannot fetch price" };
+        }
+    });
 
-            const heading = document.createElement("h4")
-            const div = document.createElement("div")
+    // Wait for all promises to resolve
+    const tokensWithPrices = await Promise.all(pricePromises);
 
-            heading.innerHTML = "<a target='_blank' rel='noopener noreferrer' title=" + explorerLink + " href=" + explorerLink + ">" + "ALPH - " + value["symbol"] + "</a>"
+    tokensWithPrices.forEach((value) => {
+        const explorerLink = `${EXPLORER_BASEURL}/addresses/${value['contractid']}`;
+        const div = document.createElement("div");
+        const heading = document.createElement("h4");
+        heading.innerHTML = `<a target='_blank' rel='noopener noreferrer' title=${explorerLink} href=${explorerLink}>ALPH - ${value["symbol"]}</a>`;
 
+        const para = document.createElement("p");
+        para.id = value["symbol"];
+        para.innerHTML = value.priceText;
+        div.appendChild(heading);
+        div.appendChild(para);
 
-            const para = document.createElement("p")
-            para.id = value["symbol"]
-            para.innerHTML = priceText
-            div.appendChild(heading);
-            div.appendChild(para);
+        // Supply and Market Cap
+        if (value["supply"] !== undefined) {
+            const paraMc = document.createElement("p");
+            const paraSupply = document.createElement("p");
+            div.appendChild(paraMc);
+            div.appendChild(paraSupply);
+            paraSupply.innerHTML = "Circulating supply: " + formatNumber(value.supply);
 
-            if (value["supply"] !== undefined) {
-               supply = value['supply']
-               var maxSupply = 0
+            const paraMaxSupply = document.createElement("p");
+            div.appendChild(paraMaxSupply);
+            paraMaxSupply.innerHTML = value.maxSupply > 0 ? "Max supply: " + formatNumber(value.maxSupply) : "Max supply: " + formatNumber(value['supply']);
 
-               if (value["circulating_supply_address"] !== undefined){
-                  supply = await getCirculatingSupply(value["supply"], value["circulating_supply_address"], value["tokenid"], value["decimals"])
-                  maxSupply = value["supply"]
-               }
+            paraMc.innerHTML = "Market cap: $" + formatNumber((value.supply * value.pricePerAlph * alphUsd).toFixed(4));
+        }
 
+        // Optional Dashboard Iframe
+        if (value["//url_dashboard"] !== undefined) {
+            const details = document.createElement("details");
+            const summary = document.createElement("summary");
+            const iframe = document.createElement("iframe");
+            iframe.src = value["//url_dashboard"];
+            iframe.style = "width: 450px; height: 200px; border: none;";
+            summary.innerText = "Historical data";
+            details.appendChild(summary);
+            details.appendChild(iframe);
+            div.appendChild(details);
+        }
 
-
-               const paraMc = document.createElement("p")
-               const paraSupply = document.createElement("p")
-               div.appendChild(paraMc)
-               div.appendChild(paraSupply)
-               paraSupply.innerHTML = "Circulating supply: " + formatNumber(supply)
-
-
-               if (maxSupply > 0) {
-                  const paraMaxSupply = document.createElement("p")
-                  div.appendChild(paraMaxSupply)
-                  paraMaxSupply.innerHTML = "Max supply: "+formatNumber(maxSupply)
-               }else{
-                  const paraMaxSupply = document.createElement("p")
-                  div.appendChild(paraMaxSupply)
-                  paraMaxSupply.innerHTML = "Max supply: "+formatNumber(value['supply'])
-               }
-
-               paraMc.innerHTML = "Market cap: $" + formatNumber((supply * pricePerAlph * alphUsd).toFixed(4))
-
-
-            }
-			
-			if (value["//url_dashboard"] !== undefined){
-			const details = document.createElement("details")
-			const summary = document.createElement("summary")
-
-			const iframe = document.createElement("iframe")
-			iframe.src = value["//url_dashboard"]
-
-			//iframe.style.border = "none"
-			iframe.style = "width: 450; height: 200; border: none;"
-
-			summary.innerText = "Historical data"
-			details.append(iframe)
-			details.append(summary)
-			div.append(details)
-			}
-            tokenListElement.appendChild(div);
-
-         }
-
-
-      }
+        tokenListElement.appendChild(div);
+    });
+}
 
       function formatNumber(number) {
          const formatter = Intl.NumberFormat("en", { notation: "standard" });
          return formatter.format(number);
       }
       async function updatePrices() {
+    // First, get the current ALPH/USD price to use for all tokens
+    const alphUsd = await getAlphUsd();
+    alphPriceText(alphUsd);
 
-         Object.entries(tokenList).forEach(async (entry) => {
-            const [key, value] = entry
-            var priceText = ""
-            const priceP = document.getElementById(value["symbol"])
+    // Map each token to a promise that fetches its price and updates the UI
+    const updatePromises = tokenList.map(async (value) => {
+        try {
+            const [alphBalance, tokenBalance] = await getPrice(
+                value["contractid"],
+                value["tokenid"],
+                value["decimals"]
+            );
+            const pricePerAlph = alphBalance / tokenBalance;
+            const priceText = `1 ${value["symbol"]} = ${pricePerAlph.toFixed(6)} ALPH ($${(pricePerAlph * alphUsd).toFixed(4)})`;
+            return { symbol: value["symbol"], priceText };
+        } catch (err) {
+            console.error(err);
+            return { symbol: value["symbol"], priceText: "error, cannot fetch price" };
+        }
+    });
 
-            const alphUsd = await getAlphUsd()
-            alphPriceText(alphUsd)
-            try {
-               price = await getPrice(
-                  value["contractid"],
-                  value["tokenid"],
-                  value["decimals"]
-               );
-               alphBalance = price[0]
-               tokenBalance = price[1]
-               pricePerAlph = alphBalance / tokenBalance
-               priceText = "1 " + value["symbol"] + " = " + (pricePerAlph).toFixed(6) + " ALPH ($" + (pricePerAlph * alphUsd).toFixed(4) + ")"
-            } catch (err) {
-               console.error(err);
-               price = "error, cannot fetch price";
-            }
+    // Wait for all the price update promises to resolve
+    const updatedPrices = await Promise.all(updatePromises);
 
-            priceP.innerHTML = priceText
-
-         })
-      }
+    // Update the UI for each token with the new price
+    updatedPrices.forEach(({ symbol, priceText }) => {
+        const priceP = document.getElementById(symbol);
+        if (priceP) {
+            priceP.innerHTML = priceText;
+        }
+    });
+}
 
       function updateSelection(autoUpdateCheckBox) {
          if (autoUpdateCheckBox.checked) {
@@ -330,9 +332,32 @@
 
          return supply - (leftSupply / Math.pow(10, decimals))
       }
+        document.addEventListener('DOMContentLoaded', function() {
+        const checkbox = document.getElementById('darkModeCheckbox');
+        checkbox.addEventListener('change', function() {
+            if (this.checked) {
+                document.body.classList.add('dark-mode');
+            } else {
+                document.body.classList.remove('dark-mode');
+            }
+        });
 
-   </script>
+        // Optional: Save dark mode preference in localStorage and read it on page load
+        const currentTheme = localStorage.getItem('darkMode') || 'light';
+        if (currentTheme === 'dark') {
+            document.body.classList.add('dark-mode');
+            checkbox.checked = true;
+        }
 
+        checkbox.addEventListener('change', function() {
+            if (this.checked) {
+                localStorage.setItem('darkMode', 'dark');
+            } else {
+                localStorage.setItem('darkMode', 'light');
+            }
+        });
+    });
+</script>
 
    <input type="checkbox" id="autoUpdate" onchange="updateSelection(this)">Auto update
 
@@ -341,7 +366,6 @@
    <div style="text-align: center;padding-left: 1em;">
 	
       <h1>Prices of <a href="https://ayin.app">AYIN DEX</a> pairs</h1>
-	  <h4><a href="https://status.notrustverify.ch/d/e2aa92a7-e89d-425f-98a0-c730bf3be1dd/ayin?orgId=1">More detailled stats</a></h4>
       <p id="loading">Loading...</p>
       <div id="tokenlist"></div>
 	  
