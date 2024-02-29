@@ -317,7 +317,7 @@ const tokenList = [
                const pricePerAlph = alphBalance / tokenBalance;
                const priceText = pricePerAlph.toFixed(6);
                const priceUsd = (pricePerAlph * alphUsd).toFixed(4)
-               const mc = value.supply * pricePerAlph * alphUsd != null ? value.supply * pricePerAlph * alphUsd : 0
+               const mc = value.supply > 0 ? value.supply * pricePerAlph * alphUsd : 0
 
                return { symbol: value["symbol"], priceText, priceUsd, mc };
             } catch (err) {
@@ -338,7 +338,7 @@ const tokenList = [
             if (priceP) {
                priceP.innerText = priceText;
                pricePusd.innerText = priceUsd;
-               mcTable.innerText = `$${formatNumber(mc).toFixed}`
+               mcTable.innerText = `$${formatNumber(mc.toFixed(4))}`
             }
          });
       }
