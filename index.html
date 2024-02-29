@@ -7,39 +7,60 @@
 </head>
 
 <body>
-    
+
    <style>
-       body.dark-mode {
-        background-color: #121212;
-        color: #e0e0e0;
-    }
-    .dark-mode h4, .dark-mode p, .dark-mode a {
-        color: #e0e0e0;
-    }
-    body {
-         margin: 10px;
+      body.dark-mode {
+         background-color: #121212;
+         color: #e0e0e0;
+      }
+
+      .dark-mode h4,
+      .dark-mode p,
+      .dark-mode a {
+         color: #e0e0e0;
+      }
+
+
+      html,
+      body {
+         height: 100%;
+      }
+
+      html {
+         display: table;
+         margin: auto;
+      }
+
+      body {
+         display: table-cell;
+         vertical-align: middle;
          font-family: "Consolas";
+
       }
 
       button.link {
          background: none;
          border: none;
       }
-      table, th, td {
+
+      table,
+      th,
+      td {
          table-layout: fixed;
       }
-      th, td {
+
+      th,
+      td {
          padding: 10px;
       }
 
-     .dark-mode tr:nth-child(even) {
+      .dark-mode tr:nth-child(even) {
          background-color: hsl(180, 83%, 16%);
       }
+
       tr:nth-child(even) {
          background-color: hsl(180, 84%, 39%);
       }
-
-
    </style>
    <script>
 
@@ -54,7 +75,7 @@
             contractid: "25ywM8iGxKpZWuGA5z6DXKGcZCXtPBmnbQyJEsjvjjWTy",
             symbol: "AYIN",
             decimals: 18,
-			//url_dashboard: "https://status.notrustverify.ch/d-solo/e2aa92a7-e89d-425f-98a0-c730bf3be1dd/ayin?orgId=1&refresh=5m&theme=light&panelId=1"
+            //url_dashboard: "https://status.notrustverify.ch/d-solo/e2aa92a7-e89d-425f-98a0-c730bf3be1dd/ayin?orgId=1&refresh=5m&theme=light&panelId=1"
          },
          {
             tokenid:
@@ -63,7 +84,7 @@
             symbol: "ALF",
             supply: 161_803,
             decimals: 9,
-			//url_dashboard: "https://status.notrustverify.ch/d-solo/e2aa92a7-e89d-425f-98a0-c730bf3be1dd/ayin?orgId=1&refresh=5m&theme=light&panelId=9"
+            //url_dashboard: "https://status.notrustverify.ch/d-solo/e2aa92a7-e89d-425f-98a0-c730bf3be1dd/ayin?orgId=1&refresh=5m&theme=light&panelId=9"
          },
          {
             tokenid:
@@ -71,7 +92,7 @@
             contractid: "2A5R8KZQ3rhKYrW7bAS4JTjY9FCFLJg6HjQpqSFZBqACX",
             symbol: "USDT",
             decimals: 6
-	 },
+         },
          {
             tokenid:
                "b522184377a33e376e997a950288fa76c1f48e97bc29cd10779adc7cfb673200",
@@ -79,7 +100,7 @@
             symbol: "BERRY",
             decimals: 0,
             supply: 10_000,
-			//url_dashboard: "https://status.notrustverify.ch/d-solo/e2aa92a7-e89d-425f-98a0-c730bf3be1dd/ayin?orgId=1&refresh=5m&theme=light&panelId=13"
+            //url_dashboard: "https://status.notrustverify.ch/d-solo/e2aa92a7-e89d-425f-98a0-c730bf3be1dd/ayin?orgId=1&refresh=5m&theme=light&panelId=13"
          },
          {
             tokenid:
@@ -89,16 +110,16 @@
             decimals: 9,
             circulating_supply_address: "1GDegYLQDXFwDBwMnjTzZXGXW4vYoxxwPKEHNAf8smquV",
             supply: 999999,
-			//url_dashboard: "https://status.notrustverify.ch/d-solo/e2aa92a7-e89d-425f-98a0-c730bf3be1dd/ayin?orgId=1&refresh=5m&theme=light&panelId=10"
+            //url_dashboard: "https://status.notrustverify.ch/d-solo/e2aa92a7-e89d-425f-98a0-c730bf3be1dd/ayin?orgId=1&refresh=5m&theme=light&panelId=10"
          },
-         
+
          {
             tokenid:
                "b2d71c116408ae47b931482a440f675dc9ea64453db24ee931dacd578cae9002",
             contractid: "27wpryy3RtEYLnkuF2xgPKQfcYAxWY4mFxaM8XHpXndfD",
             symbol: "PACA",
             decimals: 0,
-			//url_dashboard: "https://status.notrustverify.ch/d-solo/e2aa92a7-e89d-425f-98a0-c730bf3be1dd/ayin?orgId=1&refresh=5m&theme=light&panelId=11"
+            //url_dashboard: "https://status.notrustverify.ch/d-solo/e2aa92a7-e89d-425f-98a0-c730bf3be1dd/ayin?orgId=1&refresh=5m&theme=light&panelId=11"
             //supply: 100_000_000,
             //circulating_supply_address: "1dSyUmEbDXp6RWvpK25t9VqM3RUa4PGQa24di37boPJP"
          },
@@ -109,7 +130,7 @@
             symbol: "TAIL",
             decimals: 0,
             supply: 200000,
-			//url_dashboard: "https://status.notrustverify.ch/d-solo/e2aa92a7-e89d-425f-98a0-c730bf3be1dd/ayin?orgId=1&refresh=5m&theme=light&panelId=12"
+            //url_dashboard: "https://status.notrustverify.ch/d-solo/e2aa92a7-e89d-425f-98a0-c730bf3be1dd/ayin?orgId=1&refresh=5m&theme=light&panelId=12"
             //supply: 69_000_000,
             //circulating_supply_address: "19TUu8oE8dfDzH3RuJhACdBFh3Wndez7xZ8Fqjb13GiKd"
          },
@@ -120,7 +141,7 @@
             symbol: "NGU",
             decimals: 7,
             supply: 7777777,
-			//url_dashboard: "https://status.notrustverify.ch/d-solo/e2aa92a7-e89d-425f-98a0-c730bf3be1dd/ayin?orgId=1&refresh=5m&theme=light&panelId=12"
+            //url_dashboard: "https://status.notrustverify.ch/d-solo/e2aa92a7-e89d-425f-98a0-c730bf3be1dd/ayin?orgId=1&refresh=5m&theme=light&panelId=12"
             //supply: 69_000_000,
             //circulating_supply_address: "19TUu8oE8dfDzH3RuJhACdBFh3Wndez7xZ8Fqjb13GiKd"
          },
@@ -132,7 +153,7 @@
             decimals: 5,
             circulating_supply_address: "1pyEwJ576wnMh2acyednFq4p8f16QqWK5TJ5zsDCYLQp",
             supply: 100000000,
-         },	      
+         },
          {
             tokenid:
                "c1aeea313e36454f35beaf40130c9219faa40ba645aff93e16429146039f8202",
@@ -140,8 +161,8 @@
             symbol: "WANG",
             decimals: 5,
             circulating_supply_address: "1GKH3r2ZG9M8R1TRFFxrf5gq6Ww7MgdrLYt7cptiG4Vrx",
-            supply: 6000000,			
-         }, 
+            supply: 6000000,
+         },
          {
             tokenid:
                "4e0eb20afb173cd534ae29acd013861115482c1e3d8ed626294bbe1008a3f900",
@@ -149,17 +170,17 @@
             symbol: "MIX",
             decimals: 8,
             circulating_supply_address: "X2Wp1VoypFSASzqhUoockvTPt6vcNaEyi7KKSetUHq6TZ21DaXP8dKAsirwH7YBjBba2pCkd2khaMfWUjrDQgvWFvjwC5oSi3xJBCkWpnHLQNwngSAnmS6RmT9Qad9SD1V2aJW",
-            supply:  10000000,			
+            supply: 10000000,
          },
-	 {
+         {
             tokenid:
                "b49031320af0ff6fd2764ec7176687257efe1d491eff1baf315db21f10412c00",
             contractid: "24N2ytovpgBtVwiqLjd89c2fvFe2qD7HzhnLY6RrivAbH",
             symbol: "MIRA",
             decimals: 9,
             circulating_supply_address: "1AxpRjnEpXgbbqKLeH4ZxU14gzzW6Jr87TZKPR5Nmmran",
-            supply:  100000000,			
-         }, 	
+            supply: 100000000,
+         },
       ];
 
       document.addEventListener("DOMContentLoaded", async function (event) {
@@ -176,135 +197,135 @@
       });
 
 
-      function alphPriceText(alphUsd){
-         document.getElementById("alphPrice").innerHTML = "<i>ALPH Price $" + alphUsd+"</i>"
+      function alphPriceText(alphUsd) {
+         document.getElementById("alphPrice").innerHTML = "<i>ALPH Price $" + alphUsd + "</i>"
       }
 
       async function textPrice(alphUsd) {
-    const tokenListElement = document.getElementById("tokenlisttable");
+         const tokenListElement = document.getElementById("tokenlisttable");
 
-    // Prepare to fetch all prices in parallel
-    const pricePromises = tokenList.map(async (value) => {
-        try {
-            const price = await getPrice(value["contractid"], value["tokenid"], value["decimals"]);
-            const alphBalance = price[0];
-            const tokenBalance = price[1];
-            const pricePerAlph = alphBalance / tokenBalance;
-            let supply = value['supply'] || 0;
-            let maxSupply = 0;
+         // Prepare to fetch all prices in parallel
+         const pricePromises = tokenList.map(async (value) => {
+            try {
+               const price = await getPrice(value["contractid"], value["tokenid"], value["decimals"]);
+               const alphBalance = price[0];
+               const tokenBalance = price[1];
+               const pricePerAlph = alphBalance / tokenBalance;
+               let supply = value['supply'] || 0;
+               let maxSupply = 0;
 
-            // Calculate circulating supply if address is provided
-            if (value["circulating_supply_address"] !== undefined) {
-                supply = await getCirculatingSupply(value["supply"], value["circulating_supply_address"], value["tokenid"], value["decimals"]);
-                maxSupply = value["supply"];
+               // Calculate circulating supply if address is provided
+               if (value["circulating_supply_address"] !== undefined) {
+                  supply = await getCirculatingSupply(value["supply"], value["circulating_supply_address"], value["tokenid"], value["decimals"]);
+                  maxSupply = value["supply"];
+               }
+
+               return {
+                  ...value,
+                  priceText: value["symbol"],
+                  pricePerAlph: pricePerAlph.toFixed(6),
+                  priceUsd: (pricePerAlph * alphUsd).toFixed(4),
+                  supply,
+                  maxSupply
+               };
+            } catch (err) {
+               console.error(err);
+               return { ...value, priceText: "error, cannot fetch price" };
+            }
+         });
+
+         // Wait for all promises to resolve
+         const tokensWithPrices = await Promise.all(pricePromises);
+
+         tokensWithPrices.forEach((value) => {
+            const explorerLink = `${EXPLORER_BASEURL}/addresses/${value['contractid']}`;
+
+            const tr = document.createElement("tr");
+            tr.id = value["symbol"]
+
+            const symbol = document.createElement("td");
+            symbol.innerHTML = `<a target='_blank' rel='noopener noreferrer' title=${explorerLink} href=${explorerLink}>${value["symbol"]}</a>`;
+
+            tr.appendChild(symbol);
+
+            const tdPriceAlph = document.createElement("td")
+            tdPriceAlph.innerText = `ℵ${value.pricePerAlph}`
+
+            const tdPriceUsd = document.createElement("td")
+            tdPriceUsd.innerText = `$${value.priceUsd}`
+
+            tr.appendChild(tdPriceAlph)
+            tr.appendChild(tdPriceUsd)
+
+            // Supply and Market Cap
+            if (value["supply"] !== undefined) {
+               const paraMc = document.createElement("td");
+               const paraSupply = document.createElement("td");
+               tr.appendChild(paraMc);
+               tr.appendChild(paraSupply);
+               paraSupply.innerHTML = formatNumber(value.supply);
+
+               const paraMaxSupply = document.createElement("td");
+               tr.appendChild(paraMaxSupply);
+               paraMaxSupply.innerHTML = value.maxSupply > 0 ? formatNumber(value.maxSupply) : formatNumber(value['supply']);
+
+               paraMc.innerHTML = "$" + formatNumber((value.supply * value.pricePerAlph * alphUsd).toFixed(4));
             }
 
-            return {
-                ...value,
-                priceText: value["symbol"],
-                pricePerAlph: pricePerAlph.toFixed(6),
-                priceUsd: (pricePerAlph * alphUsd).toFixed(4),
-                supply,
-                maxSupply
-            };
-        } catch (err) {
-            console.error(err);
-            return { ...value, priceText: "error, cannot fetch price" };
-        }
-    });
+            // Optional Dashboard Iframe
+            if (value["//url_dashboard"] !== undefined) {
+               const details = document.createElement("details");
+               const summary = document.createElement("summary");
+               const iframe = document.createElement("iframe");
+               iframe.src = value["//url_dashboard"];
+               iframe.style = "width: 450px; height: 200px; border: none;";
+               summary.innerText = "Historical data";
+               details.appendChild(summary);
+               details.appendChild(iframe);
+               tr.appendChild(details);
+            }
 
-    // Wait for all promises to resolve
-    const tokensWithPrices = await Promise.all(pricePromises);
-
-    tokensWithPrices.forEach((value) => {
-        const explorerLink = `${EXPLORER_BASEURL}/addresses/${value['contractid']}`;
-      
-        const tr = document.createElement("tr");
-        tr.id = value["symbol"]
-
-        const symbol = document.createElement("td");
-        symbol.innerHTML = `<a target='_blank' rel='noopener noreferrer' title=${explorerLink} href=${explorerLink}>${value["symbol"]}</a>`;
-
-        tr.appendChild(symbol);
-
-        const tdPriceAlph = document.createElement("td")
-        tdPriceAlph.innerText = `ℵ${value.pricePerAlph}`
-
-        const tdPriceUsd = document.createElement("td")
-        tdPriceUsd.innerText = `$${value.priceUsd}`
-
-        tr.appendChild(tdPriceAlph)
-        tr.appendChild(tdPriceUsd)
-
-        // Supply and Market Cap
-        if (value["supply"] !== undefined) {
-            const paraMc = document.createElement("td");
-            const paraSupply = document.createElement("td");
-            tr.appendChild(paraMc);
-            tr.appendChild(paraSupply);
-            paraSupply.innerHTML = formatNumber(value.supply);
-
-            const paraMaxSupply = document.createElement("td");
-            tr.appendChild(paraMaxSupply);
-            paraMaxSupply.innerHTML = value.maxSupply > 0 ? formatNumber(value.maxSupply) : formatNumber(value['supply']);
-
-            paraMc.innerHTML = "$" + formatNumber((value.supply * value.pricePerAlph * alphUsd).toFixed(4));
-        }
-
-        // Optional Dashboard Iframe
-        if (value["//url_dashboard"] !== undefined) {
-            const details = document.createElement("details");
-            const summary = document.createElement("summary");
-            const iframe = document.createElement("iframe");
-            iframe.src = value["//url_dashboard"];
-            iframe.style = "width: 450px; height: 200px; border: none;";
-            summary.innerText = "Historical data";
-            details.appendChild(summary);
-            details.appendChild(iframe);
-            tr.appendChild(details);
-        }
-
-        tokenListElement.appendChild(tr);
-    });
-}
+            tokenListElement.appendChild(tr);
+         });
+      }
 
       function formatNumber(number) {
          const formatter = Intl.NumberFormat("en", { notation: "standard" });
          return formatter.format(number);
       }
       async function updatePrices() {
-    // First, get the current ALPH/USD price to use for all tokens
-    const alphUsd = await getAlphUsd();
-    alphPriceText(alphUsd);
+         // First, get the current ALPH/USD price to use for all tokens
+         const alphUsd = await getAlphUsd();
+         alphPriceText(alphUsd);
 
-    // Map each token to a promise that fetches its price and updates the UI
-    const updatePromises = tokenList.map(async (value) => {
-        try {
-            const [alphBalance, tokenBalance] = await getPrice(
-                value["contractid"],
-                value["tokenid"],
-                value["decimals"]
-            );
-            const pricePerAlph = alphBalance / tokenBalance;
-            const priceText = `1 ${value["symbol"]} = ${pricePerAlph.toFixed(6)} ALPH ($${(pricePerAlph * alphUsd).toFixed(4)})`;
-            return { symbol: value["symbol"], priceText };
-        } catch (err) {
-            console.error(err);
-            return { symbol: value["symbol"], priceText: "error, cannot fetch price" };
-        }
-    });
+         // Map each token to a promise that fetches its price and updates the UI
+         const updatePromises = tokenList.map(async (value) => {
+            try {
+               const [alphBalance, tokenBalance] = await getPrice(
+                  value["contractid"],
+                  value["tokenid"],
+                  value["decimals"]
+               );
+               const pricePerAlph = alphBalance / tokenBalance;
+               const priceText = `1 ${value["symbol"]} = ${pricePerAlph.toFixed(6)} ALPH ($${(pricePerAlph * alphUsd).toFixed(4)})`;
+               return { symbol: value["symbol"], priceText };
+            } catch (err) {
+               console.error(err);
+               return { symbol: value["symbol"], priceText: "error, cannot fetch price" };
+            }
+         });
 
-    // Wait for all the price update promises to resolve
-    const updatedPrices = await Promise.all(updatePromises);
+         // Wait for all the price update promises to resolve
+         const updatedPrices = await Promise.all(updatePromises);
 
-    // Update the UI for each token with the new price
-    updatedPrices.forEach(({ symbol, priceText }) => {
-        const priceP = document.getElementById(symbol);
-        if (priceP) {
-            priceP.innerHTML = priceText;
-        }
-    });
-}
+         // Update the UI for each token with the new price
+         updatedPrices.forEach(({ symbol, priceText }) => {
+            const priceP = document.getElementById(symbol);
+            if (priceP) {
+               priceP.innerHTML = priceText;
+            }
+         });
+      }
 
       function updateSelection(autoUpdateCheckBox) {
          if (autoUpdateCheckBox.checked) {
@@ -374,61 +395,61 @@
 
          return supply - (leftSupply / Math.pow(10, decimals))
       }
-        document.addEventListener('DOMContentLoaded', function() {
-        const checkbox = document.getElementById('darkModeCheckbox');
-        checkbox.addEventListener('change', function() {
+      document.addEventListener('DOMContentLoaded', function () {
+         const checkbox = document.getElementById('darkModeCheckbox');
+         checkbox.addEventListener('change', function () {
             if (this.checked) {
-                document.body.classList.add('dark-mode');
+               document.body.classList.add('dark-mode');
             } else {
-                document.body.classList.remove('dark-mode');
+               document.body.classList.remove('dark-mode');
             }
-        });
+         });
 
-        // Optional: Save dark mode preference in localStorage and read it on page load
-        const currentTheme = localStorage.getItem('darkMode') || 'light';
-        if (currentTheme === 'dark') {
+         // Optional: Save dark mode preference in localStorage and read it on page load
+         const currentTheme = localStorage.getItem('darkMode') || 'light';
+         if (currentTheme === 'dark') {
             document.body.classList.add('dark-mode');
             checkbox.checked = true;
-        }
+         }
 
-        checkbox.addEventListener('change', function() {
+         checkbox.addEventListener('change', function () {
             if (this.checked) {
-                localStorage.setItem('darkMode', 'dark');
+               localStorage.setItem('darkMode', 'dark');
             } else {
-                localStorage.setItem('darkMode', 'light');
+               localStorage.setItem('darkMode', 'light');
             }
-        });
-    });
-</script>
+         });
+      });
+   </script>
 
-<div id="dark-mode-toggle" style="position: fixed; top: -.200em; right: 0; padding: 15px;">
-   <label>  
-   <input type="checkbox" id="autoUpdate" onchange="updateSelection(this)">Auto update
-</label>
-     <label>
+   <div id="dark-mode-toggle" style=" top: -.200em; right: 0; padding: 15px;">
+      <label>
+         <input type="checkbox" id="autoUpdate" onchange="updateSelection(this)">Auto update
+      </label>
+      <label>
          <input type="checkbox" id="darkModeCheckbox"> Dark Mode
-     </label>
- </div>
+      </label>
+   </div>
    <p style="padding-left: 1em;margin-bottom: -1em;margin-top: 1.5em;" id="alphPrice"></p>
 
    <div style="text-align: center;">
-	
+
       <h1>Prices of <a href="https://ayin.app">AYIN DEX</a> pairs</h1>
       <p id="loading">Loading...</p>
       <div style="overflow-x:auto;">
-      <table id="tokenlisttable">
-         <tr>
-            <td><b>Coin</b></td>
-            <td><b>Price</b></td>
-            <td><b>Price (USD)</b></td>
-            <td><b>Market Cap</b></td>
-            <td><b>Circulating supply</b></td>
-            <td><b>Total supply</b></td>
-         </tr>
-      </table>	  
-	  </div>
+         <table id="tokenlisttable">
+            <tr>
+               <td><b>Coin</b></td>
+               <td><b>Price</b></td>
+               <td><b>Price (USD)</b></td>
+               <td><b>Market Cap</b></td>
+               <td><b>Circulating supply</b></td>
+               <td><b>Total supply</b></td>
+            </tr>
+         </table>
+      </div>
    </div>
-   
+
 </body>
 
 </html>
