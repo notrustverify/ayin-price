@@ -315,9 +315,10 @@ const tokenList = [
                   value["decimals"]
                );
                const pricePerAlph = alphBalance / tokenBalance;
-               const priceText = `${pricePerAlph.toFixed(6)}`;
+               const priceText = pricePerAlph.toFixed(6);
                const priceUsd = (pricePerAlph * alphUsd).toFixed(4)
-               const mc = "$" + formatNumber((value.supply * value.pricePerAlph * alphUsd).toFixed(4));
+               const mc = value.supply * pricePerAlph * alphUsd != null ? value.supply * pricePerAlph * alphUsd : 0
+
                return { symbol: value["symbol"], priceText, priceUsd, mc };
             } catch (err) {
                console.error(err);
@@ -329,14 +330,15 @@ const tokenList = [
          const updatedPrices = await Promise.all(updatePromises);
 
          // Update the UI for each token with the new price
-         updatedPrices.forEach(({ symbol, priceText }) => {
-            const priceP = document.getElementById(`${symbol}+pricealph`);
-            const pricePusd = document.getElementById(`${symbol}+priceusd`);
+         updatedPrices.forEach(({ symbol, priceText, priceUsd, mc }) => {
+            const priceP = document.getElementById(`${symbol}pricealph`);
+            const pricePusd = document.getElementById(`${symbol}priceusd`);
             const mcTable = document.getElementById(`${symbol}mc`)
+            console.log(mc)
             if (priceP) {
-               priceP.innerHTML = priceText;
-               pricePusd.innerText = pricePusd;
-               mcTable.innerText = mc
+               priceP.innerText = priceText;
+               pricePusd.innerText = priceUsd;
+               mcTable.innerText = `$${formatNumber(mc).toFixed}`
             }
          });
       }
