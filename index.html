@@ -42,6 +42,18 @@
          background: none;
          border: none;
       }
+      table, th, td {
+         table-layout: fixed;
+      }
+      th, td {
+         padding: 10px;
+      }
+
+      tr:nth-child(even) {
+         background-color: #D6EEEE;
+      }
+     
+
 
    </style>
    <script>
@@ -184,7 +196,7 @@
       }
 
       async function textPrice(alphUsd) {
-    const tokenListElement = document.getElementById("tokenlist");
+    const tokenListElement = document.getElementById("tokenlisttable");
 
     // Prepare to fetch all prices in parallel
     const pricePromises = tokenList.map(async (value) => {
@@ -204,8 +216,9 @@
 
             return {
                 ...value,
-                priceText: `1 ${value["symbol"]} = ${pricePerAlph.toFixed(6)} ALPH ($${(pricePerAlph * alphUsd).toFixed(4)})`,
-                pricePerAlph,
+                priceText: value["symbol"],
+                pricePerAlph: pricePerAlph.toFixed(6),
+                priceUsd: (pricePerAlph * alphUsd).toFixed(4),
                 supply,
                 maxSupply
             };
@@ -220,29 +233,36 @@
 
     tokensWithPrices.forEach((value) => {
         const explorerLink = `${EXPLORER_BASEURL}/addresses/${value['contractid']}`;
-        const div = document.createElement("div");
-        const heading = document.createElement("h4");
-        heading.innerHTML = `<a target='_blank' rel='noopener noreferrer' title=${explorerLink} href=${explorerLink}>ALPH - ${value["symbol"]}</a>`;
+      
+        const tr = document.createElement("tr");
+        const symbol = document.createElement("td");
+        symbol.innerHTML = `<a target='_blank' rel='noopener noreferrer' title=${explorerLink} href=${explorerLink}>${value["symbol"]}</a>`;
+        symbol.id = value["symbol"]
 
-        const para = document.createElement("p");
-        para.id = value["symbol"];
-        para.innerHTML = value.priceText;
-        div.appendChild(heading);
-        div.appendChild(para);
+        tr.appendChild(symbol);
+
+        const tdPriceAlph = document.createElement("td")
+        tdPriceAlph.innerText = `ℵ${value.pricePerAlph}`
+
+        const tdPriceUsd = document.createElement("td")
+        tdPriceUsd.innerText = `$${value.priceUsd}`
+
+        tr.appendChild(tdPriceAlph)
+        tr.appendChild(tdPriceUsd)
 
         // Supply and Market Cap
         if (value["supply"] !== undefined) {
-            const paraMc = document.createElement("p");
-            const paraSupply = document.createElement("p");
-            div.appendChild(paraMc);
-            div.appendChild(paraSupply);
-            paraSupply.innerHTML = "Circulating supply: " + formatNumber(value.supply);
+            const paraMc = document.createElement("td");
+            const paraSupply = document.createElement("td");
+            tr.appendChild(paraMc);
+            tr.appendChild(paraSupply);
+            paraSupply.innerHTML = formatNumber(value.supply);
 
-            const paraMaxSupply = document.createElement("p");
-            div.appendChild(paraMaxSupply);
-            paraMaxSupply.innerHTML = value.maxSupply > 0 ? "Max supply: " + formatNumber(value.maxSupply) : "Max supply: " + formatNumber(value['supply']);
+            const paraMaxSupply = document.createElement("td");
+            tr.appendChild(paraMaxSupply);
+            paraMaxSupply.innerHTML = value.maxSupply > 0 ? formatNumber(value.maxSupply) : formatNumber(value['supply']);
 
-            paraMc.innerHTML = "Market cap: $" + formatNumber((value.supply * value.pricePerAlph * alphUsd).toFixed(4));
+            paraMc.innerHTML = "$" + formatNumber((value.supply * value.pricePerAlph * alphUsd).toFixed(4));
         }
 
         // Optional Dashboard Iframe
@@ -255,10 +275,10 @@
             summary.innerText = "Historical data";
             details.appendChild(summary);
             details.appendChild(iframe);
-            div.appendChild(details);
+            tr.appendChild(details);
         }
 
-        tokenListElement.appendChild(div);
+        tokenListElement.appendChild(tr);
     });
 }
 
@@ -403,8 +423,16 @@
 	
       <h1>Prices of <a href="https://ayin.app">AYIN DEX</a> pairs</h1>
       <p id="loading">Loading...</p>
-      <div id="tokenlist"></div>
-	  
+      <table id="tokenlisttable">
+         <tr>
+            <td><b>Coin</b></td>
+            <td><b>Price</b></td>
+            <td><b>Price (USD)</b></td>
+            <td><b>Market Cap</b></td>
+            <td><b>Circulating supply</b></td>
+            <td><b>Total supply</b></td>
+         </tr>
+      </table>	  
 	  
    </div>
    
