@@ -334,8 +334,8 @@ const tokenList = [
             const priceP = document.getElementById(`${symbol}pricealph`);
             const pricePusd = document.getElementById(`${symbol}priceusd`);
             const mcTable = document.getElementById(`${symbol}mc`)
-            console.log(mc)
-            if (priceP) {
+
+            if (priceP && mc > 0) {
                priceP.innerText = priceText;
                pricePusd.innerText = priceUsd;
                mcTable.innerText = `$${formatNumber(mc.toFixed(4))}`
@@ -346,7 +346,7 @@ const tokenList = [
       function updateSelection(autoUpdateCheckBox) {
          if (autoUpdateCheckBox.checked) {
             updatePrices()
-            intervalUpdate = setInterval(updatePrices, 30000);
+            intervalUpdate = setInterval(updatePrices, 40000);
          }
          else {
             if (typeof intervalUpdate !== 'undefined')
