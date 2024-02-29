@@ -168,7 +168,17 @@ const tokenList = [
       decimals: 8,
       circulating_supply_address: "X2Wp1VoypFSASzqhUoockvTPt6vcNaEyi7KKSetUHq6TZ21DaXP8dKAsirwH7YBjBba2pCkd2khaMfWUjrDQgvWFvjwC5oSi3xJBCkWpnHLQNwngSAnmS6RmT9Qad9SD1V2aJW",
       supply: 10000000,
-   }
+   },
+   {
+            tokenid:
+               "b49031320af0ff6fd2764ec7176687257efe1d491eff1baf315db21f10412c00",
+            contractid: "24N2ytovpgBtVwiqLjd89c2fvFe2qD7HzhnLY6RrivAbH",
+            symbol: "MIRA",
+            decimals: 9,
+            circulating_supply_address: "1AxpRjnEpXgbbqKLeH4ZxU14gzzW6Jr87TZKPR5Nmmran",
+            supply: 100000000,
+         },
+
 ];
 
 
@@ -244,9 +254,12 @@ const tokenList = [
 
             const tdPriceAlph = document.createElement("td")
             tdPriceAlph.innerText = `ℵ${value.pricePerAlph}`
+            tdPriceAlph.id = `${value["symbol"]}pricealph`
 
             const tdPriceUsd = document.createElement("td")
             tdPriceUsd.innerText = `$${value.priceUsd}`
+            tdPriceUsd.id = `${value["symbol"]}priceusd`
+
 
             tr.appendChild(tdPriceAlph)
             tr.appendChild(tdPriceUsd)
@@ -254,6 +267,7 @@ const tokenList = [
             // Supply and Market Cap
             if (value["supply"] !== undefined) {
                const paraMc = document.createElement("td");
+               paraMc.id = `${value["symbol"]}mc`
                const paraSupply = document.createElement("td");
                tr.appendChild(paraMc);
                tr.appendChild(paraSupply);
@@ -301,8 +315,10 @@ const tokenList = [
                   value["decimals"]
                );
                const pricePerAlph = alphBalance / tokenBalance;
-               const priceText = `1 ${value["symbol"]} = ${pricePerAlph.toFixed(6)} ALPH ($${(pricePerAlph * alphUsd).toFixed(4)})`;
-               return { symbol: value["symbol"], priceText };
+               const priceText = `${pricePerAlph.toFixed(6)}`;
+               const priceUsd = (pricePerAlph * alphUsd).toFixed(4)
+               const mc = "$" + formatNumber((value.supply * value.pricePerAlph * alphUsd).toFixed(4));
+               return { symbol: value["symbol"], priceText, priceUsd, mc };
             } catch (err) {
                console.error(err);
                return { symbol: value["symbol"], priceText: "error, cannot fetch price" };
@@ -314,9 +330,13 @@ const tokenList = [
 
          // Update the UI for each token with the new price
          updatedPrices.forEach(({ symbol, priceText }) => {
-            const priceP = document.getElementById(symbol);
+            const priceP = document.getElementById(`${symbol}+pricealph`);
+            const pricePusd = document.getElementById(`${symbol}+priceusd`);
+            const mcTable = document.getElementById(`${symbol}mc`)
             if (priceP) {
                priceP.innerHTML = priceText;
+               pricePusd.innerText = pricePusd;
+               mcTable.innerText = mc
             }
          });
       }
