@@ -336,8 +336,8 @@ const tokenList = [
             const mcTable = document.getElementById(`${symbol}mc`)
 
             if (priceP && mc > 0) {
-               priceP.innerText = priceText;
-               pricePusd.innerText = priceUsd;
+               priceP.innerText = `ℵ${priceText}`;
+               pricePusd.innerText = `$${priceUsd}`;
                mcTable.innerText = `$${formatNumber(mc.toFixed(4))}`
             }
          });
