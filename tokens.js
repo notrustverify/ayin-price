@@ -113,5 +113,14 @@ const tokenList = [
       circulating_supply_address: "1AxpRjnEpXgbbqKLeH4ZxU14gzzW6Jr87TZKPR5Nmmran",
       supply: 100000000,
    },
+   {
+      tokenid:
+         "e565d11d6d5194dc2a65c7d67c324d341bc55f1e7131a9ef5577e8e75e199000",
+      contractid: "2AzrpxxrPTirUseiTUkkQUzMbwMPBpUcSG7B21rnb5uaP",
+      symbol: "SQRL",
+      decimals: 4,
+      circulating_supply_address: "1G81TCNxBcvte5V1MUv7Ne1Mrq17yPC78kSzP7i3ieGTn",
+      supply: 1000000000,
+    },
 
 ];
