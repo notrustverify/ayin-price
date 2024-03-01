@@ -205,6 +205,10 @@
          document.getElementById("alphPrice").innerHTML = "<i>ALPH Price $" + alphUsd + "</i>"
       }
 
+
+      
+
+
       async function textPrice(alphUsd) {
          const tokenListElement = document.getElementById("tokenlisttable");
 
@@ -241,10 +245,24 @@
          // Wait for all promises to resolve
          const tokensWithPrices = await Promise.all(pricePromises);
 
+
+         tokensWithPrices.sort((a, b) => {
+    let keyA = a.supply * a.priceUsd * a.pricePerAlph 
+    let keyB = b.supply * b.priceUsd * b.pricePerAlph
+    if (keyA > keyB) return -1;
+    if (keyA < keyB) return 1;
+    return 0;
+});
+let counterPos = 1
          tokensWithPrices.forEach((value) => {
             const explorerLink = `${EXPLORER_BASEURL}/addresses/${value['contractid']}`;
-
+            
+         
             const tr = document.createElement("tr");
+            const trPos = document.createElement("td")
+            trPos.innerHTML =`<b>${counterPos++}</b>`
+            tr.appendChild(trPos)
+
             tr.id = value["symbol"]
 
             const symbol = document.createElement("td");
@@ -276,7 +294,6 @@
                const paraMaxSupply = document.createElement("td");
                tr.appendChild(paraMaxSupply);
                paraMaxSupply.innerHTML = value.maxSupply > 0 ? formatNumber(value.maxSupply) : formatNumber(value['supply']);
-               console.log(value.supply * value.pricePerAlph * alphUsd)
                paraMc.innerHTML = "$" + formatNumber((value.supply * value.pricePerAlph * alphUsd).toFixed(4));
             }
 
@@ -301,6 +318,19 @@
          const formatter = Intl.NumberFormat("en", { notation: "standard" });
          return formatter.format(number);
       }
+
+
+      function parseLocaleNumber(stringNumber, locale) {
+    var thousandSeparator = Intl.NumberFormat(locale).format(11111).replace(/\p{Number}/gu, '');
+    var decimalSeparator = Intl.NumberFormat(locale).format(1.1).replace(/\p{Number}/gu, '');
+
+    return parseFloat(stringNumber
+        .replace(new RegExp('\\' + thousandSeparator, 'g'), '')
+        .replace(new RegExp('\\' + decimalSeparator), '.')
+    );
+}
+
+
       async function updatePrices() {
          // First, get the current ALPH/USD price to use for all tokens
          const alphUsd = await getAlphUsd();
@@ -321,7 +351,7 @@
                let supply = 0
                if(value["circulating_supply_address"] !== undefined) {
                supply = await getCirculatingSupply(value["supply"], value["circulating_supply_address"], value["tokenid"], value["decimals"]);
-               console.log(supply)
+
                }
                const mc = supply > 0 ? supply * pricePerAlph * alphUsd : 0
 
@@ -465,6 +495,7 @@
       <div style="overflow-x:auto;">
          <table id="tokenlisttable">
             <tr>
+               <td><b>#</b></td>
                <td><b>Coin</b></td>
                <td><b>Price</b></td>
                <td><b>Price (USD)</b></td>
