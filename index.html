@@ -318,12 +318,15 @@
                const priceText = pricePerAlph.toFixed(6);
                const priceUsd = (pricePerAlph * alphUsd).toFixed(4)
 
+               let supply = 0
+               if(value["circulating_supply_address"] !== undefined) {
                supply = await getCirculatingSupply(value["supply"], value["circulating_supply_address"], value["tokenid"], value["decimals"]);
                console.log(supply)
-
+               }
                const mc = supply > 0 ? supply * pricePerAlph * alphUsd : 0
 
                return { symbol: value["symbol"], priceText, priceUsd, mc };
+               
             } catch (err) {
                console.error(err);
                return { symbol: value["symbol"], priceText: "error, cannot fetch price" };
