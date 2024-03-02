@@ -176,7 +176,7 @@
                const paraMaxSupply = document.createElement("td");
                tr.appendChild(paraMaxSupply);
                paraMaxSupply.innerHTML = value.maxSupply > 0 ? formatNumber(value.maxSupply) : formatNumber(value['supply']);
-               paraMc.innerHTML = "$" + formatNumber((value.supply * value.pricePerAlph * alphUsd).toFixed(4));
+               paraMc.innerHTML = "$" + formatNumber((value.supply * value.pricePerAlph * alphUsd).toFixed(0));
             }
 
             // Optional Dashboard Iframe
@@ -258,7 +258,7 @@
             if (priceP && mc > 0) {
                priceP.innerText = `ℵ${priceText}`;
                pricePusd.innerText = `$${priceUsd}`;
-               mcTable.innerText = `$${formatNumber(mc.toFixed(4))}`
+               mcTable.innerText = `$${formatNumber(mc.toFixed(0))}`
             }
          });
       }
