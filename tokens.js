@@ -115,7 +115,7 @@ const tokenList = [
    },
    {
       tokenid: "b3e354fb095fffe3d5fe0431ef6209604323f9d3db069e008d9e8aeacaa30800",
-      contractid: "16c64b8191e964f74d66454180b3b93719d7ea02deb164010c9c905c50c69500",
+      contractid: "vDrTMDnkZNNMnR2wgr68RUQSJBqBejtQiB1We2QPtyWP",
       symbol: "Noodz",
       decimals: 0,
       circulating_supply_address: "17LG6JZa42HXUAeouX3xAEJUeTTX4SpZMDT1AMKUJBFvp",
