@@ -129,8 +129,8 @@
 
 
          tokensWithPrices.sort((a, b) => {
-            let keyA = a.supply * a.priceUsd
-            let keyB = b.supply * b.priceUsd
+            let keyA = a.supply * a.pricePerAlph
+            let keyB = b.supply * b.pricePerAlph
             if (keyA > keyB) return -1;
             if (keyA < keyB) return 1;
             return 0;
