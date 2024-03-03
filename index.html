@@ -114,7 +114,7 @@
                   ...value,
                   priceText: value["symbol"],
                   pricePerAlph: pricePerAlph.toFixed(6),
-                  priceUsd: (pricePerAlph * alphUsd).toFixed(4),
+                  priceUsd: pricePerAlph * alphUsd,
                   supply,
                   maxSupply
                };
@@ -129,8 +129,8 @@
 
 
          tokensWithPrices.sort((a, b) => {
-            let keyA = a.supply * a.pricePerAlph
-            let keyB = b.supply * b.pricePerAlph
+            let keyA = a.supply * a.priceUsd
+            let keyB = b.supply * b.priceUsd
             if (keyA > keyB) return -1;
             if (keyA < keyB) return 1;
             return 0;
@@ -157,7 +157,7 @@
             tdPriceAlph.id = `${value["symbol"]}pricealph`
 
             const tdPriceUsd = document.createElement("td")
-            tdPriceUsd.innerText = `$${value.priceUsd}`
+            tdPriceUsd.innerText = `$${value.priceUsd.toFixed(6)}`
             tdPriceUsd.id = `${value["symbol"]}priceusd`
 
 
