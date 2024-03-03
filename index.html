@@ -228,7 +228,7 @@
                );
                const pricePerAlph = alphBalance / tokenBalance;
                const priceText = pricePerAlph.toFixed(6);
-               const priceUsd = (pricePerAlph * alphUsd).toFixed(4)
+               const priceUsd = pricePerAlph * alphUsd
 
                let supply = 0
                if (value["circulating_supply_address"] !== undefined) {
@@ -257,7 +257,7 @@
 
             if (priceP && mc > 0) {
                priceP.innerText = `ℵ${priceText}`;
-               pricePusd.innerText = `$${priceUsd}`;
+               pricePusd.innerText = `$${priceUsd.toFixed(5)}`;
                mcTable.innerText = `$${formatNumber(mc.toFixed(0))}`
             }
          });
