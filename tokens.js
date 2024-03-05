@@ -121,5 +121,13 @@ const tokenList = [
       circulating_supply_address: "17LG6JZa42HXUAeouX3xAEJUeTTX4SpZMDT1AMKUJBFvp",
       supply: 69420000000,
    },
+   {
+      tokenid: "f79530d767a13ff4baef0870f18adfd17c7b418edd214f89b53ce24df62acf00",
+      contractid: "xqCJD9o3iVeiBDvUQuJ2hSqZne7HPL15Sztrbh5fC4Xq",
+      symbol: "GRAPE",
+      decimals: 9,
+      circulating_supply_address: "2BMQkyyX5ktLQRcWdLP4PiQcfxxHHUJusvqpQS8fMoozo",
+      supply: 21000000
+   }
 
 ];
