@@ -121,6 +121,7 @@ const tokenList = [
       circulating_supply_address: "1G81TCNxBcvte5V1MUv7Ne1Mrq17yPC78kSzP7i3ieGTn",
       supply: 1000000000,
     },
+   {
       tokenid: "b3e354fb095fffe3d5fe0431ef6209604323f9d3db069e008d9e8aeacaa30800",
       contractid: "vDrTMDnkZNNMnR2wgr68RUQSJBqBejtQiB1We2QPtyWP",
       symbol: "Noodz",
