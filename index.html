@@ -114,7 +114,7 @@
                   ...value,
                   priceText: value["symbol"],
                   pricePerAlph: pricePerAlph.toFixed(6),
-                  priceUsd: (pricePerAlph * alphUsd).toFixed(4),
+                  priceUsd: pricePerAlph * alphUsd,
                   supply,
                   maxSupply
                };
@@ -157,7 +157,7 @@
             tdPriceAlph.id = `${value["symbol"]}pricealph`
 
             const tdPriceUsd = document.createElement("td")
-            tdPriceUsd.innerText = `$${value.priceUsd}`
+            tdPriceUsd.innerText = `$${value.priceUsd.toFixed(6)}`
             tdPriceUsd.id = `${value["symbol"]}priceusd`
 
 
@@ -176,7 +176,7 @@
                const paraMaxSupply = document.createElement("td");
                tr.appendChild(paraMaxSupply);
                paraMaxSupply.innerHTML = value.maxSupply > 0 ? formatNumber(value.maxSupply) : formatNumber(value['supply']);
-               paraMc.innerHTML = "$" + formatNumber((value.supply * value.pricePerAlph * alphUsd).toFixed(4));
+               paraMc.innerHTML = "$" + formatNumber((value.supply * value.pricePerAlph * alphUsd).toFixed(0));
             }
 
             // Optional Dashboard Iframe
@@ -228,7 +228,7 @@
                );
                const pricePerAlph = alphBalance / tokenBalance;
                const priceText = pricePerAlph.toFixed(6);
-               const priceUsd = (pricePerAlph * alphUsd).toFixed(4)
+               const priceUsd = pricePerAlph * alphUsd
 
                let supply = 0
                if (value["circulating_supply_address"] !== undefined) {
@@ -257,8 +257,8 @@
 
             if (priceP && mc > 0) {
                priceP.innerText = `ℵ${priceText}`;
-               pricePusd.innerText = `$${priceUsd}`;
-               mcTable.innerText = `$${formatNumber(mc.toFixed(4))}`
+               pricePusd.innerText = `$${priceUsd.toFixed(6)}`;
+               mcTable.innerText = `$${formatNumber(mc.toFixed(0))}`
             }
          });
       }
