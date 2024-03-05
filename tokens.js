@@ -133,7 +133,7 @@ const tokenList = [
       contractid: "xqCJD9o3iVeiBDvUQuJ2hSqZne7HPL15Sztrbh5fC4Xq",
       symbol: "GRAPE",
       decimals: 9,
-      circulating_supply_address: "2BMQkyyX5ktLQRcWdLP4PiQcfxxHHUJusvqpQS8fMoozo",
+      circulating_supply_address: "16kdv1Mw9RqaS62mPnArvcFzXXrzQBqEzwGSpVae1zJ1E",
       supply: 21000000
    }
 
