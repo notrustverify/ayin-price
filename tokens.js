@@ -136,6 +136,13 @@ const tokenList = [
       decimals: 9,
       circulating_supply_address: "16kdv1Mw9RqaS62mPnArvcFzXXrzQBqEzwGSpVae1zJ1E",
       supply: 21000000
+   },
+   {
+      tokenid: "d5a72d57b7fbbac2189da5f26914109dcdd39dd743ae4c4008e79a505c8a9800",
+      contractid: "uqMwHD5wjqZDTa53eddzsji6Tm9fc2pox97qQ3Qrvsrf",
+      symbol: "PUTAN",
+      decimals: 18,
+      circulating_supply_address: "1DdAqRrecvRgTtiwqBjB8wqmNF4a6q2QWXiSS4RBeYTAJ",
+      supply: 1000000000000
    }
-
 ];
