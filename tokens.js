@@ -52,7 +52,7 @@ const tokenList = [
       symbol: "PACA",
       decimals: 0,
       //url_dashboard: "https://status.notrustverify.ch/d-solo/e2aa92a7-e89d-425f-98a0-c730bf3be1dd/ayin?orgId=1&refresh=5m&theme=light&panelId=11"
-      //supply: 100_000_000,
+      supply: 11000000
       //circulating_supply_address: "1dSyUmEbDXp6RWvpK25t9VqM3RUa4PGQa24di37boPJP"
    },
    {
