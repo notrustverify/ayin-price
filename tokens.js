@@ -52,8 +52,8 @@ const tokenList = [
       symbol: "PACA",
       decimals: 0,
       //url_dashboard: "https://status.notrustverify.ch/d-solo/e2aa92a7-e89d-425f-98a0-c730bf3be1dd/ayin?orgId=1&refresh=5m&theme=light&panelId=11"
-      supply: 11000000
-      //circulating_supply_address: "1dSyUmEbDXp6RWvpK25t9VqM3RUa4PGQa24di37boPJP"
+      supply: 11000000,
+      circulating_supply_address: "9wgsavEg4KTAd4bEreii3rEc7Dc5VY76yznzj9j8fyXPQJyEZkNfA8ESsBHnBeyzGBZsygr3Lvm3NrTTPWgJ3oLaHKWX6tYSzPXmKN6n25t7Zx5BYgLeuSTB9gMtrjPXjKeZT38NCnQ4Q3U5kw8fMSKNvCVfuK3qE1tepuMAdDxFprrWpr"
    },
    {
       tokenid:
