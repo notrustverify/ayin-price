@@ -93,7 +93,7 @@ const tokenList = [
       symbol: "WANG",
       decimals: 5,
       circulating_supply_address: "1GKH3r2ZG9M8R1TRFFxrf5gq6Ww7MgdrLYt7cptiG4Vrx",
-      supply: 6000000,
+      supply: 1500000,
    },
    {
       tokenid:
