@@ -24,16 +24,7 @@ const tokenList = [
       contractid: "2A5R8KZQ3rhKYrW7bAS4JTjY9FCFLJg6HjQpqSFZBqACX",
       symbol: "USDT",
       decimals: 6
-   },
-   {
-      tokenid:
-         "b522184377a33e376e997a950288fa76c1f48e97bc29cd10779adc7cfb673200",
-      contractid: "w5ZU1rV34YJryDCXCXJBXA77Wbx5L4DCmunDG3Pn5GWb",
-      symbol: "BERRY",
-      decimals: 0,
-      supply: 10_000,
-      //url_dashboard: "https://status.notrustverify.ch/d-solo/e2aa92a7-e89d-425f-98a0-c730bf3be1dd/ayin?orgId=1&refresh=5m&theme=light&panelId=13"
-   },
+   },   
    {
       tokenid:
          "7da28936499f56ffed497fe7eba856aa85eeb943bab2478e36f7020d89cd2400",
@@ -44,7 +35,6 @@ const tokenList = [
       supply: 999999,
       //url_dashboard: "https://status.notrustverify.ch/d-solo/e2aa92a7-e89d-425f-98a0-c730bf3be1dd/ayin?orgId=1&refresh=5m&theme=light&panelId=10"
    },
-
    {
       tokenid:
          "b2d71c116408ae47b931482a440f675dc9ea64453db24ee931dacd578cae9002",
@@ -128,23 +118,7 @@ const tokenList = [
       decimals: 0,
       circulating_supply_address: "17LG6JZa42HXUAeouX3xAEJUeTTX4SpZMDT1AMKUJBFvp",
       supply: 69420000000,
-   },
-   {
-      tokenid: "f79530d767a13ff4baef0870f18adfd17c7b418edd214f89b53ce24df62acf00",
-      contractid: "xqCJD9o3iVeiBDvUQuJ2hSqZne7HPL15Sztrbh5fC4Xq",
-      symbol: "GRAPE",
-      decimals: 9,
-      circulating_supply_address: "16kdv1Mw9RqaS62mPnArvcFzXXrzQBqEzwGSpVae1zJ1E",
-      supply: 21000000
-   },
-   {
-      tokenid: "d5a72d57b7fbbac2189da5f26914109dcdd39dd743ae4c4008e79a505c8a9800",
-      contractid: "uqMwHD5wjqZDTa53eddzsji6Tm9fc2pox97qQ3Qrvsrf",
-      symbol: "PUTAN",
-      decimals: 18,
-      circulating_supply_address: "1DdAqRrecvRgTtiwqBjB8wqmNF4a6q2QWXiSS4RBeYTAJ",
-      supply: 1000000000000
-   },
+   },   
    {
       tokenid: "11bf07230f5607f626773044414a196d0471d79ba9abc26f148b57b40d983a00",
       contractid: "26hqVwuNQ7DUEMobdySHyDiW1beoDhQHpNaoXGjoHvK2w",
@@ -152,5 +126,13 @@ const tokenList = [
       decimals: 6,
       circulating_supply_address: "19f8QMDYmsQ1QnmTQuKakhTZ3UV2wVWwJ16YTSfiXDR5h",
       supply: 100000000
+   },   
+   {
+      tokenid: "ba17d4a0d35eaf94540c31ce713d61f14b8b92f19f607d59d5f20c8d4042d700",
+      contractid: "25b5aNfdrNRjJ7ugPTkxThT51L1NSvf8igQyDHKZhweiK",
+      symbol: "CHENG",
+      decimals: 6,
+      circulating_supply_address: "162aufXbuQ8GMLFxBGtxucKGdd2ZVBzWT2giLHBzvvgUV",
+      supply: 100000000000
    }
 ];
